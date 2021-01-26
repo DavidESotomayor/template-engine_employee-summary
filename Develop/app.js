@@ -1,14 +1,14 @@
-// const Manager = require("./lib/Manager");
-// const Engineer = require("./lib/Engineer");
-// const Intern = require("./lib/Intern");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
-// const path = require("path");
-// const fs = require("fs");
+const path = require("path");
+const fs = require("fs");
 
-// const OUTPUT_DIR = path.resolve(__dirname, "output");
-// const outputPath = path.join(OUTPUT_DIR, "team.html");
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-// const render = require("./lib/htmlRenderer");
+const render = require("./lib/htmlRenderer");
 
 
 // Write code to use inquirer to gather information about the development team members,
@@ -21,8 +21,20 @@ const confirmAdd = () => {
         name: 'addMember',
         message: 'Would you like to add another team member?'
     }).then(response => {
-        if (response.addMember)
+        if (response.addMember){
             addTeamMember()
+        } else {
+            createHTML()
+        }
+    })
+}
+
+const createHTML = () => {
+    console.log('New HTML created!');
+    console.log(render(team));
+    render(team)
+    fs.writeFile('index.html', render(team), (err) => {
+        if (err) throw err;
     })
 }
 
@@ -58,7 +70,7 @@ const addTeamMember = () => {inquirer
                 message: 'What is your office number?'
             }).then(manager => {
                 Object.assign(answers, manager)
-                team.push(answers)
+                team.push(new Manager(answers.name, answers.id, answers.email, answers.role, answers.manager))
                 console.log(team);
                 confirmAdd()
                 })
@@ -69,7 +81,7 @@ const addTeamMember = () => {inquirer
                 message: 'What is your GitHub username?'
             }).then(engineer => {
                 Object.assign(answers, engineer)
-                team.push(answers)
+                team.push(new Engineer(answers.name, answers.id, answers.email, answers.role, answers.engineer))
                 console.log(team);
                 confirmAdd()
             })
@@ -80,7 +92,7 @@ const addTeamMember = () => {inquirer
                 message: 'What is the name of your school?'
             }).then(intern => {
                 Object.assign(answers, intern)
-                team.push(answers)
+                team.push(new Intern(answers.name, answers.id, answers.email, answers.role, answers.intern))
                 console.log(team);
                 confirmAdd()
             })
