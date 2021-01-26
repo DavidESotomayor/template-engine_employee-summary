@@ -2,10 +2,10 @@
 // const Engineer = require("./lib/Engineer");
 // const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
-const path = require("path");
+// const path = require("path");
 // const fs = require("fs");
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
+// const OUTPUT_DIR = path.resolve(__dirname, "output");
 // const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 // const render = require("./lib/htmlRenderer");
@@ -37,11 +37,60 @@ inquirer
             message: 'What is your role on the team?',
             choices: ["Manager", "Engineer", "Intern"]
         }
+        // {
+        //     type: 'list',
+        //     name: 'office_number',
+        //     message: 'What is your office number?',
+        //     when: answers => answers.role === false
+        // },
+        // {
+        //     type: 'list',
+        //     name: 'github',
+        //     message: 'What is your GitHub username?',
+        //     when: answers => answers.role === false
+        // },
+        // {
+        //     type: 'list',
+        //     name: 'school',
+        //     message: 'What is the name of your school?',
+        //     when: answers => answers.role === false
+        // }
     ])
     .then(answers => {
         console.log(answers);
+        if ( answers.role === 'Manager' ) {
+            inquirer.prompt({
+                type: 'input',
+                name: 'manager',
+                message: 'What is your office number?'
+            }).then(manager => {
+                console.log(manager);
+                Object.assign(answers, manager)
+                console.log(answers);
+            })
+        } else if ( answers.role === 'Engineer' ) {
+            inquirer.prompt({
+                type: 'input',
+                name: 'engineer',
+                message: 'What is your GitHub username?'
+            }).then(engineer => {
+                console.log(engineer);
+                Object.assign(answers, engineer)
+                console.log(answers);
+            })
+        } else {
+            inquirer.prompt({
+                type: 'input',
+                name: 'intern',
+                message: 'What is the name of your school?'
+            }).then(intern => {
+                console.log(intern);
+                Object.assign(answers, intern)
+                console.log(answers);
+            })
+        }
     })
-    .catch(console.log())
+    .catch(console.log('Error; Please rerun program'))
 
 
 // After the user has input all employees desired, call the `render` function (required
