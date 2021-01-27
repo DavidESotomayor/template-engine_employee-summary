@@ -2,6 +2,9 @@
     
 ## Description
 The _**Template Engine Employee Summary**_ program lives in this repository, which was created using Node, Jest, and the Inquirer npm package. The program prompts the user with questions in the terminal and stores the responses inputted.  These responses are then used to create a new html with each user information displayed.
+
+![Template Employee Summary Example](Assets/10-OOP-homework-demo-1.png)
+
     
 ## Table of Contents
 * [Installation](#installation)
